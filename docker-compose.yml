@@ -1,0 +1,26 @@
+version: '3'
+services:
+    db:
+      build:
+       context: ./db
+      environment:
+       MYSQL_ROOT_PASSWORD: password
+       MYSQL_DATABASE: poppulodb
+       MYSQL_USER: testuser
+       MYSQL_PASSWORD: testuser
+      container_name: gowithmysql_db
+      ports:
+       - "3306:3306"
+      tty: true
+    app:
+      build:
+       context: src/main
+#      volumes:
+#       - "./src/main:/app/gowithmysql/src/poppulocode"
+#      working_dir: "/app/gowithmysql/src/poppulocode"
+      container_name: gowithmysql_app
+      ports:
+      - "8080:8080"
+      tty: true
+      depends_on:
+        - db
